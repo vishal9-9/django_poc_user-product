@@ -13,15 +13,14 @@ class ProductCreationSerializer(serializers.Serializer):
     def validate(self, attrs):
         product_name = attrs.get('product_name')
         price = attrs.get('price')
-        # if product_name is None:
-        #     raise serializers.ValidationError("product_name is missing")
-        # if price:
-        #     raise serializers.ValidationError("price is missing")
-        user = self.context.get('user')
-        product = {
-            'product_name': product_name,
-            'price': price,
-            'added_by': user,
-        }
-        Products.objects.create(**product)
-        return attrs
+        if not Products.objects.filter(product_name=product_name).exists():
+            user = self.context.get('user')
+            product = {
+                'product_name': product_name,
+                'price': price,
+                'added_by': user,
+            }
+            Products.objects.create(**product)
+            return attrs
+        else:
+            raise serializers.ValidationError("Product already registered")
