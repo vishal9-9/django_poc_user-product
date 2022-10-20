@@ -21,7 +21,7 @@ class AdminRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         del validated_data['confirm_password']
-        return Users.object.create_superuser(**validated_data)
+        return Users.objects.create_superuser(**validated_data)
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(style={'input-type':'password'}, write_only=True)
@@ -43,7 +43,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         del validated_data['confirm_password']
-        return Users.object.create_user(**validated_data)
+        return Users.objects.create_user(**validated_data)
 
 class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255)

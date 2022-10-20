@@ -11,4 +11,5 @@ class Products(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=255, null=False, unique=True)
     price = models.FloatField(null=False)
+    quantity = models.IntegerField(null=False, default=1)
     added_by = models.ForeignKey(Users, on_delete=models.CASCADE)
