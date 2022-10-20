@@ -36,18 +36,3 @@ class ProductUpdatingSerializer(serializers.Serializer):
     class Meta:
         model=Products
         fields=['product_name']
-
-    def validate(self, attrs):
-        product_name = attrs.get('product_name')
-        quantity = attrs.get('quantity')
-        price = attrs.get('price')
-        product_to_update = Products.objects.filter(product_name=product_name).first()
-        if product_to_update:
-            if quantity:
-                product_to_update.quantity = quantity
-            if price:
-                product_to_update.price = price
-            product_to_update.save()
-        else:
-            raise serializers.ValidationError("No product with that name to update")
-        return attrs
