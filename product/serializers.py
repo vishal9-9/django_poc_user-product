@@ -9,24 +9,7 @@ class ProductCreationSerializer(serializers.Serializer):
 
     class Meta:
         model=Products
-        fields=['product_name','price']
-
-    def validate(self, attrs):
-        product_name = attrs.get('product_name')
-        quantity = attrs.get('quantity')
-        price = attrs.get('price')
-        if not Products.objects.filter(product_name=product_name).exists():
-            user = self.context.get('user')
-            product = {
-                'product_name': product_name,
-                'quantity': quantity,
-                'price': price,
-                'added_by': user,
-            }
-            Products.objects.create(**product)
-            return attrs
-        else:
-            raise serializers.ValidationError("Product already registered")
+        fields=['product_name' ,'price' , 'quantity']
 
 class ProductUpdatingSerializer(serializers.Serializer):
     product_name = serializers.CharField(max_length=255)
@@ -35,4 +18,4 @@ class ProductUpdatingSerializer(serializers.Serializer):
 
     class Meta:
         model=Products
-        fields=['product_name']
+        fields=['product_name' ,'price' , 'quantity']
