@@ -50,3 +50,15 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model=Users
         fields=['email','password']
+
+class UserListSerializer(serializers.ModelSerializer):
+    email = serializers.CharField()
+    user_type = serializers.CharField()
+    name = serializers.CharField()
+    is_active = serializers.BooleanField()
+    is_admin = serializers.BooleanField()
+    created_at = serializers.DateTimeField()
+
+    class Meta:
+        model=Users
+        fields=['email', 'user_type', 'name', 'is_active', 'is_admin', 'created_at']

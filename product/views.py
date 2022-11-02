@@ -1,3 +1,4 @@
+import json
 from rest_framework.decorators import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -9,6 +10,17 @@ from product.serializers import ProductCreationSerializer, ProductUpdatingSerial
 
 class ProductCreationView(APIView):
     permission_classes=[IsAuthenticated]
+
+    def get(self, request):
+        products_list = Products.objects.all()
+        if products_list:
+            to_return = []
+            for product in products_list:
+                serialized_data = ProductCreationSerializer(product)
+                to_return.append(serialized_data.data)
+            return Response({"status": 200, "success_message": to_return},status=200)
+        return Response({"status": 404, "error_message": ""},status=404)
+
     def post(self, request):
         serialized_data = ProductCreationSerializer(data=request.data)
         if serialized_data.is_valid(raise_exception=True):

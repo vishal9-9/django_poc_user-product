@@ -57,3 +57,6 @@ class Products(models.Model):
     added_by = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     objects = ProductManager()
+
+    def __str__(self):
+        return self.product_name
